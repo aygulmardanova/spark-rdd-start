@@ -14,7 +14,7 @@
 
 # Intellij Idea
 .idea
-.iml
+*.iml
 
 # MAC OS
 .DS_Store
