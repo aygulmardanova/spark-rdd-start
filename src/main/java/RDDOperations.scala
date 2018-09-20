@@ -1,3 +1,4 @@
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.{SparkConf, SparkContext}
 
 object RDDOperations {
@@ -9,6 +10,9 @@ object RDDOperations {
     val conf = new SparkConf()
     conf.setAppName("RDD Operations")
     conf.setMaster("local[2]")
+
+    Logger.getLogger("org").setLevel(Level.OFF)
+    Logger.getLogger("akka").setLevel(Level.OFF)
 
     val sc = new SparkContext(conf)
 
