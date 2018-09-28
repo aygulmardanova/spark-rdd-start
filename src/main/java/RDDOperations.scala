@@ -7,7 +7,7 @@ object RDDOperations {
   val def_filename = "input.txt"
   val take_num_count = 20
   val outputDir = "output"
-  val partedResult = "/partedResult"
+  val partedResult = "/parted"
   val oneFileResult = "/oneFile"
 
   def main(args: Array[String]): Unit = {
