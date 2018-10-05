@@ -4,7 +4,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object RDDOperations {
 
-  val def_filename = "input.txt"
+  val def_filename = "src/main/resources/input.txt"
   val take_num_count = 20
   val outputDir = "output/rddOper"
   val partedResult = "/parted"

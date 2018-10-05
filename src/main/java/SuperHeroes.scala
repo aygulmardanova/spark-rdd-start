@@ -9,7 +9,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 */
 object SuperHeroes {
 
-  val def_filename = "heroes.txt"
+  val def_filename = "src/main/resources/heroes.txt"
 
   def main(args: Array[String]): Unit = {
 
