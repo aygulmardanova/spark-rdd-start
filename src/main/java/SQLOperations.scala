@@ -3,11 +3,8 @@ import org.apache.spark.sql.functions.to_timestamp
 import org.apache.spark.sql.functions.explode
 import org.apache.spark.sql.functions.when
 import org.apache.spark.sql.functions.size
-import org.apache.spark.sql.functions.lit
 import org.apache.spark.sql.functions.col
-import org.apache.spark.sql.functions.udf
-import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.{Dataset, SQLContext, SparkSession}
+import org.apache.spark.sql.{SparkSession}
 
 object SQLOperations {
 
@@ -105,9 +102,9 @@ object SQLOperations {
 
         //Top users who has a lot of friends
         sparkSession.sql(
-            " SELECT actor.displayName, actor.friendsCount" +
-              " FROM tweetTable " +
-              " ORDER BY actor.friendsCount DESC LIMIT 25")
+            " SELECT actor.displayName, actor.friendsCount " +
+              "FROM tweetTable " +
+              "ORDER BY actor.friendsCount DESC LIMIT 25")
           .show()
 
         // Find persons mentions for each tweet
@@ -118,7 +115,7 @@ object SQLOperations {
             "   AND size(twitter_entities.user_mentions) > 0 ")
         userMents.show(5)
 
-        // Find all the persons mentioned on tweets
+        // Find all the persons mentioned on tweets, order by mentions count, 10 first
         val userMentions = sparkSession
           .sql("SELECT twitter_entities.user_mentions " +
             "FROM tweetTable " +
@@ -128,21 +125,33 @@ object SQLOperations {
         userMentions.createOrReplaceTempView("userMentions")
         userMentions.printSchema()
         sparkSession.sql("SELECT DISTINCT user_mentions.name AS name " +
-          "FROM userMentions ").show(10)
+          "FROM userMentions ").show(25)
 
         // Count how many times each person is mentioned
-        val userMentCount = sparkSession.sql("SELECT user_mentions.name AS name, COUNT(*) AS count " +
+        // Find the 10 most mentioned persons
+        val userMentionsCount = sparkSession.sql("SELECT user_mentions.name AS name, COUNT(*) AS count " +
           "FROM userMentions " +
           "GROUP BY name ORDER BY count DESC ")
-        userMentCount.show(25)
-
-        // Find the 10 most mentioned persons
+        userMentionsCount.show(10)
 
         // All the mentioned hashtags
+        val hashTagMentions = sparkSession
+          .sql("SELECT twitter_entities.hashtags " +
+            "FROM tweetTable " +
+            "WHERE twitter_entities.hashtags IS NOT NULL " +
+            "   AND size(twitter_entities.hashtags) > 0 ")
+        hashTagMentions.select(explode($"hashtags").as("hashTags")).toDF()
+        hashTagMentions.createOrReplaceTempView("hashTags")
+        hashTagMentions.printSchema()
+        sparkSession.sql("SELECT DISTINCT hashTags.text AS hashTag, hashTags.indices as indices " +
+          "FROM hashTags ").show(25)
 
         // Count of each hashtag being mentioned
-
         // Find 10 most popular hashtags
+        val hashTagMentionsCount = sparkSession.sql("SELECT hashTags.text AS hashTag, COUNT(*) AS count " +
+          "FROM hashTags " +
+          "GROUP BY hashTag ORDER BY count DESC ")
+        hashTagMentionsCount.show(10)
 
     }
 }
