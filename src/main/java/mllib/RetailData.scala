@@ -2,6 +2,7 @@ package mllib
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.fpm.FPGrowth
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SparkSession
 
@@ -15,6 +16,7 @@ object RetailData {
         Logger.getLogger("akka").setLevel(Level.OFF)
 
         val inputFile = if (args.isEmpty) def_filename else args(0)
+        val sc = new SparkContext("local[2]", "mlLib")
 
         val ss = SparkSession
           .builder()
@@ -22,11 +24,12 @@ object RetailData {
           .master("local[*]")
           .getOrCreate()
 
-        //read file with purchases
-        //val fileRDD: RDD[String] = sc.textFile(inputFile)
+        //read csv-file with purchases into RDD
+        val csvFileAsRDD: RDD[String] = sc.textFile(inputFile)
 
         //get transactions
-        //val products: RDD[Array[String]] = fileRDD.map(s => s.split(";"))
+        val productsTransactions: RDD[Array[String]] = csvFileAsRDD.map(s => s.split(";"))
+        productsTransactions.foreach(x => println(x.mkString("[", " ", "}")))
 
         val dataSetSQL = new DataSetSQL(ss, inputFile)
         val dataFrameOfInvoicesAndStockCodes = dataSetSQL.getInvoiceNoAndStockCode()

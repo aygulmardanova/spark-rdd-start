@@ -5,14 +5,14 @@ import org.apache.spark.sql.types._
 
 class DataSetSQL(sparkSession: SparkSession, input: String) {
     var dataSetSchema = StructType(Array(
-        StructField("InvoiceNo", StringType, true),
-        StructField("StockCode", StringType, true),
-        StructField("Description", StringType, true),
-        StructField("Quantity", IntegerType, true),
-        StructField("InvoiceDate", StringType, true),
-        StructField("UnitPrice", DoubleType, true),
-        StructField("CustomerID", IntegerType, true),
-        StructField("Country", StringType, true)))
+        StructField("InvoiceNo", StringType, nullable = true),
+        StructField("StockCode", StringType, nullable = true),
+        StructField("Description", StringType, nullable = true),
+        StructField("Quantity", IntegerType, nullable = true),
+        StructField("InvoiceDate", StringType, nullable = true),
+        StructField("UnitPrice", DoubleType, nullable = true),
+        StructField("CustomerID", IntegerType, nullable = true),
+        StructField("Country", StringType, nullable = true)))
 
     //Read CSV file to DF and define scheme on the fly
     private val gdelt = sparkSession.read
