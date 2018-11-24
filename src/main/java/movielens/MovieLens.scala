@@ -53,8 +53,8 @@ object MovieLens {
           .option("delimiter", ";")
           .option("nullValue", "")
           .option("treatEmptyValuesAsNulls", "true")
-//          .option("inferSchema", "true")
-          .schema(getSchema(schemaName))
+          .option("inferSchema", "true")
+//          .schema(getSchema(schemaName))
           .csv(directory_name + filename)
     }
 
