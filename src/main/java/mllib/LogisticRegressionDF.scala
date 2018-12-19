@@ -6,7 +6,7 @@ import org.apache.spark.ml.evaluation.BinaryClassificationEvaluator
 import org.apache.spark.ml.feature.{StringIndexer, VectorAssembler}
 import org.apache.spark.ml.linalg.DenseVector
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
-import org.apache.spark.sql.{SparkSession, types}
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types._
 
 object LogisticRegressionDF {
