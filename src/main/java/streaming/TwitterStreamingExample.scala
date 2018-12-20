@@ -18,7 +18,7 @@ object TwitterStreamingExample {
 
         val ssc = new StreamingContext(sc, Seconds(1))
 
-        // Configure your Twitter credentials
+        // Configure Twitter credentials
         TwitterStreamingUtils.initTwitterStream()
 
         // Create Twitter Stream
