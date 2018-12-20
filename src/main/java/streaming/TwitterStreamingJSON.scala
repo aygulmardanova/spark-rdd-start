@@ -36,7 +36,7 @@ object TwitterStreamingJSON {
             val count = rdd.count()
             if (count > 0) {
                 val outputRDD = rdd.coalesce(1)
-                outputRDD.saveAsTextFile(TwitterStreamingUtils.twitter_streaming_json_output + "/" + time)
+                outputRDD.saveAsTextFile(TwitterStreamingUtils.twitter_streaming_json_output + time)
                 numTweetsCollected += count
                 if (numTweetsCollected > numTweetsCollect) {
                     System.exit(0)

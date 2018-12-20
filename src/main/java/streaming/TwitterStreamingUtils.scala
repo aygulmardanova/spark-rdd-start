@@ -5,8 +5,8 @@ import org.apache.spark.mllib.feature.HashingTF
 object TwitterStreamingUtils {
 
     val twitter_streaming_output = "output/stream/tweets"
-    val twitter_streaming_json_output = "output/stream-json/tweets"
-    val twitter_streaming_model_output = "output/stream-model/tweets"
+    val twitter_streaming_json_output = "output/stream-json/tweets/"
+    val twitter_streaming_model_output = "output/stream-model/tweets/"
 
     def initTwitterStream(): Unit = {
 

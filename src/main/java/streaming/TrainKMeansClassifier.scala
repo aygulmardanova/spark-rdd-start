@@ -11,7 +11,7 @@ object TrainKMeansClassifier {
         Logger.getLogger("org").setLevel(Level.OFF)
         Logger.getLogger("akka").setLevel(Level.OFF)
 
-        val jsonFile = TwitterStreamingUtils.twitter_streaming_json_output + "/[0-9]* ms/part-00000"
+        val jsonFile = TwitterStreamingUtils.twitter_streaming_json_output + "[0-9]* ms/part-00000"
         val modelOutput = TwitterStreamingUtils.twitter_streaming_model_output
 
         val sparkSession = SparkSession
